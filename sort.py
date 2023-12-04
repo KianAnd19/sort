@@ -16,8 +16,11 @@ GREEN = (0, 255, 0)
 
 # Array settings
 array_size = 50
-array = [random.randint(10, 590) for _ in range(array_size)]
+max_bar_height = height - 10  # Subtract a bit to ensure bars fit in the window
+array = [(i / array_size) * max_bar_height for i in range(array_size)]
 bar_width = width // array_size
+
+random.shuffle(array)
 
 # Sorting variables
 is_sorting = False
