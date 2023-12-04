@@ -1,7 +1,4 @@
 import './style.css'
-import javascriptLogo from './javascript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.js'
 
 document.addEventListener('DOMContentLoaded', () => {
   const canvas = document.getElementById('sortingCanvas');
@@ -22,13 +19,24 @@ document.addEventListener('DOMContentLoaded', () => {
 }
 
 
-function drawArray() {
+function highlightSorted() {
+  let i = 0;
+  (function highlight(i) {
+      if (i < array.length) {
+          drawArray(i + 1);
+          setTimeout(() => highlight(i + 1), 0); // Adjust delay as needed
+      }
+  })(0);
+}
+
+function drawArray(sortedCount = 0) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   array.forEach((value, index) => {
-      ctx.fillStyle = 'blue';
+      ctx.fillStyle = index < sortedCount ? 'green' : 'blue';
       ctx.fillRect(index * (canvas.width / array.length), canvas.height - value, (canvas.width / array.length) - 2, value);
   });
 }
+
 
 function bubbleSort() {
   let n = array.length;
@@ -45,14 +53,18 @@ function bubbleSort() {
                   }
                   drawArray();
                   setTimeout(() => innerIterate(j + 1), 0);
-              } else if (swapped) {
-                  setTimeout(() => iterate(i + 1), 0);
+              } else {
+                  // End of one full pass through the array
+                  if (swapped) {
+                      setTimeout(() => iterate(i + 1), 0);
+                  } else {
+                      highlightSorted();
+                  }
               }
           })(0);
       }
   })(0);
 }
-
 
   document.getElementById('startButton').addEventListener('click', () => {
       if (!sorting) {
