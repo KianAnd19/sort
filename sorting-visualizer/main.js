@@ -66,10 +66,33 @@ function bubbleSort() {
   })(0);
 }
 
+  async function selectionSort() {
+  let n = array.length;
+
+  for (let i = 0; i < n - 1; i++) {
+      let minIndex = i;
+      for (let j = i + 1; j < n; j++) {
+          if (array[j] < array[minIndex]) {
+              minIndex = j;
+          }
+      }
+      if (minIndex != i) {
+          [array[i], array[minIndex]] = [array[minIndex], array[i]];
+          drawArray(); // Draw the array after each swap
+          await sleep(25);
+      }
+  }
+  highlightSorted(); // After sorting is complete
+}
+
+
+
   document.getElementById('startButton').addEventListener('click', () => {
       if (!sorting) {
           sorting = true;
-          bubbleSort();
+          // bubbleSort();
+          selectionSort();
+
       }
   });
 
@@ -80,3 +103,12 @@ function bubbleSort() {
 
   initializeArray(); // Initialize array on page load
 });
+
+
+
+
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
