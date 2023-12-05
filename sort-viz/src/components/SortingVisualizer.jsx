@@ -39,8 +39,8 @@ const SortingVisualizer = ({ sortAlgorithm }) => {
     return (
         <div>
             <canvas ref={canvasRef} width={800} height={300}></canvas>
-            <button onClick={startSorting}>Start Sorting</button>
-            <button onClick={initializeArray}>Reset</button>
+            <button class="bg-green-500 rounded-md px-1 m-3" onClick={startSorting}>Start Sorting</button>
+            <button class="bg-red-500 rounded-md px-1 m-3" onClick={initializeArray}>Reset</button>
         </div>
     );
 };

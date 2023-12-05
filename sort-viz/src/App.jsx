@@ -6,6 +6,8 @@ import SelectionSortPage from './pages/SelectionSort';
 import InsertionSortPage from './pages/InsertionSort';
 import QuickSortPage from './pages/QuickSort';
 import BubbleSortPage from './pages/BubbleSort';
+import MergeSortPage from './pages/MergeSort';
+// import HeapSortPage from './pages/HeapSort';
 
 // Import other sorting pages...
 
@@ -18,6 +20,8 @@ function App() {
         <Route path="/insertion-sort" element={<InsertionSortPage />} />
         <Route path="/quick-sort" element={<QuickSortPage />} /> 
         <Route path="/bubble-sort" element={<BubbleSortPage />} /> 
+        <Route path="/merge-sort" element={<MergeSortPage />} />
+        {/* <Route path="/heap-sort" element={<HeapSortPage />} /> */}
         {/* Define routes for other sorting pages... */}
       </Routes>
     </Router>

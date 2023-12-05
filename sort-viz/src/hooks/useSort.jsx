@@ -112,6 +112,53 @@ export const bubbleSort = async (array, setArray, drawArray) => {
 };
 
 
+// Add this function to your src/hooks/useSort.js
+
+export const mergeSort = async (array, setArray, drawArray) => {
+    let newArr = [...array];
+    await mergeSortRecursive(newArr, 0, newArr.length - 1, setArray, drawArray);
+    highlightSorted(newArr, drawArray);
+};
+
+const mergeSortRecursive = async (array, start, end, setArray, drawArray) => {
+    if (start >= end) return;
+
+    const middle = Math.floor((start + end) / 2);
+    await mergeSortRecursive(array, start, middle, setArray, drawArray);
+    await mergeSortRecursive(array, middle + 1, end, setArray, drawArray);
+    await merge(array, start, middle, end, setArray, drawArray);
+};
+
+const merge = async (array, start, middle, end, setArray, drawArray) => {
+    let temp = [];
+    let i = start, j = middle + 1;
+
+    while (i <= middle && j <= end) {
+        if (array[i] < array[j]) {
+            temp.push(array[i++]);
+        } else {
+            temp.push(array[j++]);
+        }
+    }
+
+    while (i <= middle) {
+        temp.push(array[i++]);
+    }
+
+    while (j <= end) {
+        temp.push(array[j++]);
+    }
+
+    for (i = start; i <= end; i++) {
+        array[i] = temp[i - start];
+        setArray([...array]);
+        drawArray(array);
+        await new Promise(resolve => setTimeout(resolve, 25));
+    }
+};
+
+
+
 const highlightSorted = async (array, drawArray) => {
     for (let i = 0; i < array.length; i++) {
         await new Promise(resolve => setTimeout(resolve, 10));
