@@ -1,4 +1,3 @@
-// src/hooks/useSort.js
 export const insertionSort = async (array, setArray, drawArray) => {
     let newArr = [...array]; // Create a copy of the array
 

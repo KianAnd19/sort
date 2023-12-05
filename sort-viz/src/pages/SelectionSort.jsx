@@ -1,4 +1,3 @@
-// src/pages/SelectionSortPage.jsx
 import React from 'react';
 import SortingVisualizer from '../components/SortingVisualizer';
 import { selectionSort } from '../hooks/useSort';

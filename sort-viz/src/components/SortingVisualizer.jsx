@@ -1,4 +1,3 @@
-// src/components/SortingVisualizer.jsx
 import React, { useState, useEffect, useRef } from 'react';
 
 const SortingVisualizer = ({ sortAlgorithm }) => {

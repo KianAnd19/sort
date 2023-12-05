@@ -1,4 +1,3 @@
-// src/pages/BubbleSortPage.jsx
 import React from 'react';
 import SortingVisualizer from '../components/SortingVisualizer';
 import { bubbleSort } from '../hooks/useSort';

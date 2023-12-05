@@ -1,4 +1,3 @@
-// src/pages/QuickSortPage.jsx
 import React from 'react';
 import SortingVisualizer from '../components/SortingVisualizer';
 import { quickSort } from '../hooks/useSort';
