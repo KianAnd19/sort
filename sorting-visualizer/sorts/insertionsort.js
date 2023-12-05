@@ -34,11 +34,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 array[j + 1] = array[j];
                 j--;
                 drawArray();
-                await new Promise(resolve => setTimeout(resolve, 25));
+                await new Promise(resolve => setTimeout(resolve, 0));
             }
             array[j + 1] = key;
             drawArray();
-            await new Promise(resolve => setTimeout(resolve, 25));
+            await new Promise(resolve => setTimeout(resolve, 0));
         }
     
         isSorting = false;
