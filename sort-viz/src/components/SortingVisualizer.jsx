@@ -1,8 +1,7 @@
 // src/components/SortingVisualizer.jsx
 import React, { useState, useEffect, useRef } from 'react';
-import { insertionSort } from '../hooks/useSort';
 
-const SortingVisualizer = () => {
+const SortingVisualizer = ({ sortAlgorithm }) => {
     const [array, setArray] = useState([]);
     const canvasRef = useRef(null);
 
@@ -12,7 +11,7 @@ const SortingVisualizer = () => {
 
     const initializeArray = () => {
         const totalBars = 50;
-        const maxHeight = 300; // Adjust based on your canvas size
+        const maxHeight = 300;
         const newArray = Array.from({ length: totalBars }, (_, i) => Math.floor((i / totalBars) * maxHeight));
         // Shuffle the array
         for (let i = newArray.length - 1; i > 0; i--) {
@@ -29,13 +28,13 @@ const SortingVisualizer = () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         arr.forEach((value, index) => {
-            ctx.fillStyle = index < sortedIndex ? 'green' : 'blue';
+            ctx.fillStyle = index <= sortedIndex ? 'green' : 'blue';
             ctx.fillRect(index * (canvas.width / arr.length), canvas.height - value, (canvas.width / arr.length) - 2, value);
         });
     };
 
     const startSorting = () => {
-        insertionSort(array, setArray, drawArray);
+        sortAlgorithm(array, setArray, drawArray);
     };
 
     return (
