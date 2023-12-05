@@ -4,8 +4,8 @@ import { insertionSort } from '../hooks/useSort';
 
 const InsertionSort = () => {
   return (
-    <div>
-      <h1>Bubble Sort Visualizer</h1>
+    <div class="bg-slate-200">
+      <h1 class="text-xl text-center font-bold">Bubble Sort Visualizer</h1>
       <SortingVisualizer sortAlgorithm={insertionSort} />
     </div>
   );
