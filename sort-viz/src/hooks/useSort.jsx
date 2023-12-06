@@ -248,31 +248,29 @@ export const bucketSort = async (array, setArray, drawArray, bucketSize = 5) => 
         return;
     }
 
-    // Determine minimum and maximum values
     let min = Math.min(...array);
     let max = Math.max(...array);
-
-    // Initialize buckets
     let bucketCount = Math.floor((max - min) / bucketSize) + 1;
     let buckets = new Array(bucketCount);
     for (let i = 0; i < buckets.length; i++) {
         buckets[i] = [];
     }
 
-    // Distribute input array values into buckets
+    // Distribute input array values into buckets and visualize
     for (let i = 0; i < array.length; i++) {
-        buckets[Math.floor((array[i] - min) / bucketSize)].push(array[i]);
-        setArray([...array]);
-        drawArray(array);
-        await new Promise(resolve => setTimeout(resolve, 25));
+        let bucketIndex = Math.floor((array[i] - min) / bucketSize);
+        buckets[bucketIndex].push(array[i]);
+        await visualizeBuckets(buckets, setArray, drawArray); // New visualization step
     }
 
     // Sort buckets and concatenate results
     array = [];
-    for (let i = 0; i < buckets.length; i++) {
-        // Using a simple sort here, you can use a different sort for optimization
-        let sortedBucket = buckets[i].sort((a, b) => a - b);
-        array = array.concat(sortedBucket);
+    for (let bucket of buckets) {
+        // Sort bucket
+        bucket.sort((a, b) => a - b);
+
+        // Concatenate bucket to main array and visualize
+        array = array.concat(bucket);
         setArray([...array]);
         drawArray(array);
         await new Promise(resolve => setTimeout(resolve, 25));
@@ -280,6 +278,15 @@ export const bucketSort = async (array, setArray, drawArray, bucketSize = 5) => 
 
     highlightSorted(array, drawArray);
 };
+
+// Function to visualize the state of buckets
+const visualizeBuckets = async (buckets, setArray, drawArray) => {
+    let tempArray = [].concat(...buckets);
+    setArray([...tempArray]);
+    drawArray(tempArray);
+    await new Promise(resolve => setTimeout(resolve, 25));
+};
+
 
 
 
