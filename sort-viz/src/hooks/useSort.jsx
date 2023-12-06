@@ -157,6 +157,130 @@ const merge = async (array, start, middle, end, setArray, drawArray) => {
     }
 };
 
+// Add this function to your src/hooks/useSort.js
+
+export const heapSort = async (array, setArray, drawArray) => {
+    let newArr = [...array];
+    let n = newArr.length;
+
+    // Build heap (rearrange array)
+    for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {
+        await heapify(newArr, n, i, setArray, drawArray);
+    }
+
+    // One by one extract an element from heap
+    for (let i = n - 1; i > 0; i--) {
+        // Move current root to end
+        [newArr[0], newArr[i]] = [newArr[i], newArr[0]];
+        setArray([...newArr]);
+        drawArray(newArr);
+
+        // Call max heapify on the reduced heap
+        await heapify(newArr, i, 0, setArray, drawArray);
+    }
+
+    highlightSorted(newArr, drawArray);
+};
+
+// To heapify a subtree rooted with node i which is an index in newArr[]
+const heapify = async (array, n, i, setArray, drawArray) => {
+    await new Promise(resolve => setTimeout(resolve, 10));
+    let largest = i; // Initialize largest as root
+    let l = 2 * i + 1; // left = 2*i + 1
+    let r = 2 * i + 2; // right = 2*i + 2
+
+    // If left child is larger than root
+    if (l < n && array[l] > array[largest]) {
+        largest = l;
+    }
+
+    // If right child is larger than largest so far
+    if (r < n && array[r] > array[largest]) {
+        largest = r;
+    }
+
+    // If largest is not root
+    if (largest !== i) {
+        [array[i], array[largest]] = [array[largest], array[i]];
+        setArray([...array]);
+        drawArray(array);
+
+        // Recursively heapify the affected sub-tree
+        await heapify(array, n, largest, setArray, drawArray);
+    }
+};
+
+
+export const radixSort = async (array, setArray, drawArray) => {
+    let newArr = [...array];
+    const maxNum = Math.max(...newArr);
+    let maxDigitCount = Math.max(...newArr).toString().length;
+
+    for (let k = 0; k < maxDigitCount; k++) {
+        let digitBuckets = Array.from({ length: 10 }, () => []);
+
+        for (let i = 0; i < newArr.length; i++) {
+            let digit = getDigit(newArr[i], k);
+            digitBuckets[digit].push(newArr[i]);
+
+            // Visualize the current state after placing each item in a bucket
+            let tempArray = [].concat(...digitBuckets).concat(newArr.slice(i + 1));
+            setArray([...tempArray]);
+            drawArray(tempArray);
+            await new Promise(resolve => setTimeout(resolve, 25));
+        }
+
+        // Combine the buckets
+        newArr = [].concat(...digitBuckets);
+    }
+
+    highlightSorted(newArr, drawArray);
+};
+
+const getDigit = (num, place) => Math.floor(Math.abs(num) / Math.pow(10, place)) % 10;
+
+
+
+// Add this function to your src/hooks/useSort.js
+
+export const bucketSort = async (array, setArray, drawArray, bucketSize = 5) => {
+    if (array.length === 0) {
+        return;
+    }
+
+    // Determine minimum and maximum values
+    let min = Math.min(...array);
+    let max = Math.max(...array);
+
+    // Initialize buckets
+    let bucketCount = Math.floor((max - min) / bucketSize) + 1;
+    let buckets = new Array(bucketCount);
+    for (let i = 0; i < buckets.length; i++) {
+        buckets[i] = [];
+    }
+
+    // Distribute input array values into buckets
+    for (let i = 0; i < array.length; i++) {
+        buckets[Math.floor((array[i] - min) / bucketSize)].push(array[i]);
+        setArray([...array]);
+        drawArray(array);
+        await new Promise(resolve => setTimeout(resolve, 25));
+    }
+
+    // Sort buckets and concatenate results
+    array = [];
+    for (let i = 0; i < buckets.length; i++) {
+        // Using a simple sort here, you can use a different sort for optimization
+        let sortedBucket = buckets[i].sort((a, b) => a - b);
+        array = array.concat(sortedBucket);
+        setArray([...array]);
+        drawArray(array);
+        await new Promise(resolve => setTimeout(resolve, 25));
+    }
+
+    highlightSorted(array, drawArray);
+};
+
 
 
 const highlightSorted = async (array, drawArray) => {
