@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter as Router, Route, Switch} from 'react-router-dom';
+import { HashRouter as Router, Routes, Route} from 'react-router-dom';
 import HomeScreen from './components/HomeScreen';
 
 import SelectionSortPage from './pages/SelectionSort';
