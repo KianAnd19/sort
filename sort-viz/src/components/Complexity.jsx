@@ -1,7 +1,7 @@
 import React from 'react';
 
 const ComplexityBox = ({ label, complexity }) => (
-    <div className="border border-gray-300 rounded p-2 text-center bg-white">
+    <div className="border border-gray-300 rounded p-2 text-center bg-white shadow-md">
         <p className="font-bold">{label}</p>
         <p>{complexity}</p>
     </div>
