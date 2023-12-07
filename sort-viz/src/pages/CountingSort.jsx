@@ -1,4 +1,3 @@
-// src/pages/CountingSortPage.jsx
 import React from 'react';
 import SortingVisualizer from '../components/SortingVisualizer';
 import { countingSort } from '../hooks/useSort';

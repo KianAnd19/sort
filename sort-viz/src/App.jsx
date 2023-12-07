@@ -12,6 +12,7 @@ import RadixSortPage from './pages/RadixSort';
 import BucketSortPage from './pages/BucketSort';
 import ShellSortPage from './pages/ShellSort';
 import CountingSortPage from './pages/CountingSort';
+import RandomSortPage from './pages/RandomSort';
 
 // Import other sorting pages...
 
@@ -30,6 +31,7 @@ function App() {
         <Route path="/bucket-sort" element={<BucketSortPage />} />
         <Route path="/shell-sort" element={<ShellSortPage />} />
         <Route path="/counting-sort" element={<CountingSortPage />} />
+        <Route path="/random-sort" element={<RandomSortPage />} />
         {/* Define routes for other sorting pages... */}
       </Routes>
     </Router>

@@ -382,6 +382,35 @@ export const countingSort = async (array, setArray, drawArray) => {
     highlightSorted(output, drawArray);
 };
 
+/*****************************************************************************/
+/*************************   Random Sort   ***********************************/
+/*****************************************************************************/
+export const randomSort = async (array, setArray, drawArray) => {
+    let newArr = [...array];
+
+    // Function to check if the array is sorted
+    const isSorted = (arr) => {
+        for (let i = 1; i < arr.length; i++) {
+            if (arr[i - 1] > arr[i]) {
+                return false;
+            }
+        }
+        return true;
+    };
+
+    // Shuffle the array until it is sorted
+    while (!isSorted(newArr)) {
+        for (let i = newArr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
+        }
+        setArray([...newArr]);
+        drawArray(newArr);
+        await new Promise(resolve => setTimeout(resolve, 25));
+    }
+
+    highlightSorted(newArr, drawArray);
+};
 
 
 
