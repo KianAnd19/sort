@@ -2,7 +2,8 @@
 /************************  Insertion Sort   **********************************/
 /*****************************************************************************/
 export const insertionSort = async (array, setArray, drawArray) => {
-    let newArr = [...array]; // Create a copy of the array
+    let newArr = [...array];
+    const maxVal = Math.max(...newArr);
 
     for (let i = 1; i < newArr.length; i++) {
         let key = newArr[i];
@@ -12,16 +13,17 @@ export const insertionSort = async (array, setArray, drawArray) => {
             newArr[j + 1] = newArr[j];
             j--;
             newArr[j + 1] = key;
-            // Update the array in state and redraw the canvas for each step
+
             setArray(newArr.slice());
             drawArray(newArr);
-            await new Promise(resolve => setTimeout(resolve, 25)); // Delay for visualization
+            playSound(newArr[j + 1], maxVal); // Play sound for the current element
+            await new Promise(resolve => setTimeout(resolve, 25));
         }
     }
 
-    // Once sorting is done, highlight the sorted array
     highlightSorted(newArr, drawArray);
 };
+
 
 
 
@@ -29,6 +31,7 @@ export const insertionSort = async (array, setArray, drawArray) => {
 /************************  Selection Sort   **********************************/
 /*****************************************************************************/
 export const selectionSort = async (array, setArray, drawArray) => {
+    const maxVal = Math.max(...array);
     let newArr = [...array]; // Create a copy of the array
 
     for (let i = 0; i < newArr.length - 1; i++) {
@@ -40,6 +43,7 @@ export const selectionSort = async (array, setArray, drawArray) => {
         }
         if (minIndex !== i) {
             [newArr[i], newArr[minIndex]] = [newArr[minIndex], newArr[i]];
+            playSound(array[i], maxVal);
             setArray(newArr.slice());
             drawArray(newArr);
             await new Promise(resolve => setTimeout(resolve, 25)); // Delay for visualization
@@ -63,7 +67,7 @@ export const quickSort = async (array, setArray, drawArray, start = 0, end = arr
         }
         return;
     }
-
+    
     let index = await partition(array, start, end, setArray, drawArray);
     await Promise.all([
         quickSort(array, setArray, drawArray, start, index - 1, false),
@@ -77,8 +81,9 @@ export const quickSort = async (array, setArray, drawArray, start = 0, end = arr
 
 
 const partition = async (array, start, end, setArray, drawArray) => {
-    const pivotValue = array[end];
+    let pivotValue = array[end];
     let pivotIndex = start;
+    const maxVal = Math.max(...array);
 
     for (let i = start; i < end; i++) {
         if (array[i] < pivotValue) {
@@ -86,6 +91,7 @@ const partition = async (array, start, end, setArray, drawArray) => {
             pivotIndex++;
             setArray([...array]);
             drawArray(array);
+            playSound(array[i], maxVal); // Play sound based on the element's value
             await new Promise(resolve => setTimeout(resolve, 25));
         }
     }
@@ -93,10 +99,12 @@ const partition = async (array, start, end, setArray, drawArray) => {
     [array[pivotIndex], array[end]] = [array[end], array[pivotIndex]];
     setArray([...array]);
     drawArray(array);
+    // playSound(array[pivotIndex], maxVal); // Play sound for pivot placement
     await new Promise(resolve => setTimeout(resolve, 25));
 
     return pivotIndex;
 };
+
 
 
 
@@ -107,6 +115,7 @@ export const bubbleSort = async (array, setArray, drawArray) => {
     let newArr = [...array];
     let n = newArr.length;
     let isSorted = false;
+    const maxVal = Math.max(...array);
 
     while (!isSorted) {
         isSorted = true;
@@ -116,6 +125,7 @@ export const bubbleSort = async (array, setArray, drawArray) => {
                 isSorted = false;
                 setArray([...newArr]);
                 drawArray(newArr);
+                playSound(newArr[i], maxVal); // Play sound based on the element's value
                 await new Promise(resolve => setTimeout(resolve, 25));
             }
         }
@@ -148,6 +158,7 @@ const mergeSortRecursive = async (array, start, end, setArray, drawArray) => {
 const merge = async (array, start, middle, end, setArray, drawArray) => {
     let temp = [];
     let i = start, j = middle + 1;
+    const maxVal = Math.max(...array);
 
     while (i <= middle && j <= end) {
         if (array[i] < array[j]) {
@@ -169,6 +180,7 @@ const merge = async (array, start, middle, end, setArray, drawArray) => {
         array[i] = temp[i - start];
         setArray([...array]);
         drawArray(array);
+        playSound(array[i], maxVal); // Play sound based on the element's value
         await new Promise(resolve => setTimeout(resolve, 25));
     }
 };
@@ -203,6 +215,7 @@ export const heapSort = async (array, setArray, drawArray) => {
 
 // To heapify a subtree rooted with node i which is an index in newArr[]
 const heapify = async (array, n, i, setArray, drawArray) => {
+    const maxVal = Math.max(...array);
     await new Promise(resolve => setTimeout(resolve, 10));
     let largest = i; // Initialize largest as root
     let l = 2 * i + 1; // left = 2*i + 1
@@ -223,6 +236,7 @@ const heapify = async (array, n, i, setArray, drawArray) => {
         [array[i], array[largest]] = [array[largest], array[i]];
         setArray([...array]);
         drawArray(array);
+        playSound(array[i], maxVal); // Play sound based on the element's value
 
         // Recursively heapify the affected sub-tree
         await heapify(array, n, largest, setArray, drawArray);
@@ -238,6 +252,7 @@ export const radixSort = async (array, setArray, drawArray) => {
     let newArr = [...array];
     const maxNum = Math.max(...newArr);
     let maxDigitCount = Math.max(...newArr).toString().length;
+    const maxVal = Math.max(...array);
 
     for (let k = 0; k < maxDigitCount; k++) {
         let digitBuckets = Array.from({ length: 10 }, () => []);
@@ -250,6 +265,7 @@ export const radixSort = async (array, setArray, drawArray) => {
             let tempArray = [].concat(...digitBuckets).concat(newArr.slice(i + 1));
             setArray([...tempArray]);
             drawArray(tempArray);
+            playSound(newArr[i], maxVal); // Play sound based on the element's value
             await new Promise(resolve => setTimeout(resolve, 25));
         }
 
@@ -269,6 +285,7 @@ const getDigit = (num, place) => Math.floor(Math.abs(num) / Math.pow(10, place))
 /*************************   Bucket Sort   ***********************************/
 /*****************************************************************************/
 export const bucketSort = async (array, setArray, drawArray, bucketSize = 5) => {
+    const maxVal = Math.max(...array);
     if (array.length === 0) {
         return;
     }
@@ -285,20 +302,22 @@ export const bucketSort = async (array, setArray, drawArray, bucketSize = 5) => 
     for (let i = 0; i < array.length; i++) {
         let bucketIndex = Math.floor((array[i] - min) / bucketSize);
         buckets[bucketIndex].push(array[i]);
+        playSound(array[i], maxVal);
         await visualizeBuckets(buckets, setArray, drawArray); // New visualization step
     }
 
     // Sort buckets and concatenate results
     array = [];
     for (let bucket of buckets) {
-        // Sort bucket
         bucket.sort((a, b) => a - b);
 
-        // Concatenate bucket to main array and visualize
-        array = array.concat(bucket);
-        setArray([...array]);
-        drawArray(array);
-        await new Promise(resolve => setTimeout(resolve, 25));
+        for (let item of bucket) {
+            array.push(item);
+            playSound(item, maxVal); // Play sound for each element added back to array
+            setArray([...array]);
+            drawArray(array);
+            await new Promise(resolve => setTimeout(resolve, 25));
+        }
     }
 
     highlightSorted(array, drawArray);
@@ -319,6 +338,7 @@ const visualizeBuckets = async (buckets, setArray, drawArray) => {
 export const shellSort = async (array, setArray, drawArray) => {
     let newArr = [...array];
     let n = newArr.length;
+    const maxVal = Math.max(...array);
 
     // Start with a big gap, then reduce the gap
     for (let gap = Math.floor(n / 2); gap > 0; gap = Math.floor(gap / 2)) {
@@ -338,6 +358,7 @@ export const shellSort = async (array, setArray, drawArray) => {
             newArr[j] = temp;
             setArray([...newArr]);
             drawArray(newArr);
+            playSound(newArr[j], maxVal); // Play sound based on the element's value
             await new Promise(resolve => setTimeout(resolve, 25));
         }
     }
@@ -352,6 +373,7 @@ export const shellSort = async (array, setArray, drawArray) => {
 /************************   Counting Sort   **********************************/
 /*****************************************************************************/
 export const countingSort = async (array, setArray, drawArray) => {
+    const maxVal = Math.max(...array);
     let newArr = [...array];
     let max = Math.max(...newArr);
     let min = Math.min(...newArr);
@@ -376,6 +398,7 @@ export const countingSort = async (array, setArray, drawArray) => {
         count[newArr[i] - min]--;
         setArray([...output]);
         drawArray(output);
+        playSound(output[i], maxVal); // Play sound based on the element's value
         await new Promise(resolve => setTimeout(resolve, 25));
     }
     
@@ -387,6 +410,7 @@ export const countingSort = async (array, setArray, drawArray) => {
 /*****************************************************************************/
 export const randomSort = async (array, setArray, drawArray) => {
     let newArr = [...array];
+    const maxVal = Math.max(...array);
 
     // Function to check if the array is sorted
     const isSorted = (arr) => {
@@ -406,20 +430,39 @@ export const randomSort = async (array, setArray, drawArray) => {
         }
         setArray([...newArr]);
         drawArray(newArr);
+        playSound(newArr[0], maxVal); // Play sound based on the element's value
         await new Promise(resolve => setTimeout(resolve, 25));
     }
 
     highlightSorted(newArr, drawArray);
 };
 
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+const playSound = (value, maxVal) => {
+    const oscillator = audioCtx.createOscillator();
+    oscillator.type = 'sine';
+    const maxFrequency = 1000;
+    const frequency = (value / maxVal) * maxFrequency;
+    oscillator.frequency.setValueAtTime(frequency, audioCtx.currentTime);
+
+    oscillator.connect(audioCtx.destination);
+    oscillator.start();
+    oscillator.stop(audioCtx.currentTime + 0.1); // Sound duration of 100ms
+};
+
+
 
 
 const highlightSorted = async (array, drawArray) => {
+    const maxVal = Math.max(...array);
     for (let i = 0; i < array.length; i++) {
-        await new Promise(resolve => setTimeout(resolve, 10));
         drawArray(array, i + 1);
+        playSound(array[i], maxVal); // Play sound based on the element's value
+        await new Promise(resolve => setTimeout(resolve, 50)); // Adjust time as needed
     }
 };
+
 
 // Modify drawArray function to highlight the sorted part
 const drawArray = (arr, sortedIndex = arr.length) => {
