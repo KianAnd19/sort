@@ -1,3 +1,6 @@
+/*****************************************************************************/
+/************************  Insertion Sort   **********************************/
+/*****************************************************************************/
 export const insertionSort = async (array, setArray, drawArray) => {
     let newArr = [...array]; // Create a copy of the array
 
@@ -20,6 +23,11 @@ export const insertionSort = async (array, setArray, drawArray) => {
     highlightSorted(newArr, drawArray);
 };
 
+
+
+/*****************************************************************************/
+/************************  Selection Sort   **********************************/
+/*****************************************************************************/
 export const selectionSort = async (array, setArray, drawArray) => {
     let newArr = [...array]; // Create a copy of the array
 
@@ -42,8 +50,11 @@ export const selectionSort = async (array, setArray, drawArray) => {
     highlightSorted(newArr, drawArray);
 };
 
-// Add this function to your src/hooks/useSort.js
 
+
+/*****************************************************************************/
+/*************************    Quick Sort   ***********************************/
+/*****************************************************************************/
 export const quickSort = async (array, setArray, drawArray, start = 0, end = array.length - 1, isTopLevel = true) => {
     if (start >= end) {
         if (isTopLevel) {
@@ -87,8 +98,11 @@ const partition = async (array, start, end, setArray, drawArray) => {
     return pivotIndex;
 };
 
-// Add this function to your src/hooks/useSort.js
 
+
+/*****************************************************************************/
+/*************************   Bubble Sort   ***********************************/
+/*****************************************************************************/
 export const bubbleSort = async (array, setArray, drawArray) => {
     let newArr = [...array];
     let n = newArr.length;
@@ -112,8 +126,10 @@ export const bubbleSort = async (array, setArray, drawArray) => {
 };
 
 
-// Add this function to your src/hooks/useSort.js
 
+/*****************************************************************************/
+/*************************    Merge Sort   ***********************************/
+/*****************************************************************************/
 export const mergeSort = async (array, setArray, drawArray) => {
     let newArr = [...array];
     await mergeSortRecursive(newArr, 0, newArr.length - 1, setArray, drawArray);
@@ -157,8 +173,11 @@ const merge = async (array, start, middle, end, setArray, drawArray) => {
     }
 };
 
-// Add this function to your src/hooks/useSort.js
 
+
+/*****************************************************************************/
+/*************************    Heap Sort    ***********************************/
+/*****************************************************************************/
 export const heapSort = async (array, setArray, drawArray) => {
     let newArr = [...array];
     let n = newArr.length;
@@ -211,6 +230,10 @@ const heapify = async (array, n, i, setArray, drawArray) => {
 };
 
 
+
+/*****************************************************************************/
+/*************************    Radix Sort   ***********************************/
+/*****************************************************************************/
 export const radixSort = async (array, setArray, drawArray) => {
     let newArr = [...array];
     const maxNum = Math.max(...newArr);
@@ -241,8 +264,10 @@ const getDigit = (num, place) => Math.floor(Math.abs(num) / Math.pow(10, place))
 
 
 
-// Add this function to your src/hooks/useSort.js
 
+/*****************************************************************************/
+/*************************   Bucket Sort   ***********************************/
+/*****************************************************************************/
 export const bucketSort = async (array, setArray, drawArray, bucketSize = 5) => {
     if (array.length === 0) {
         return;
@@ -285,6 +310,76 @@ const visualizeBuckets = async (buckets, setArray, drawArray) => {
     setArray([...tempArray]);
     drawArray(tempArray);
     await new Promise(resolve => setTimeout(resolve, 25));
+};
+
+
+/*****************************************************************************/
+/*************************    Shell Sort   ***********************************/
+/*****************************************************************************/
+export const shellSort = async (array, setArray, drawArray) => {
+    let newArr = [...array];
+    let n = newArr.length;
+
+    // Start with a big gap, then reduce the gap
+    for (let gap = Math.floor(n / 2); gap > 0; gap = Math.floor(gap / 2)) {
+        for (let i = gap; i < n; i += 1) {
+            let temp = newArr[i];
+
+            // Shift earlier gap-sorted elements up until the correct location for newArr[i] is found
+            let j;
+            for (j = i; j >= gap && newArr[j - gap] > temp; j -= gap) {
+                newArr[j] = newArr[j - gap];
+                setArray([...newArr]);
+                drawArray(newArr);
+                await new Promise(resolve => setTimeout(resolve, 25));
+            }
+
+            // Put temp (the original newArr[i]) in its correct location
+            newArr[j] = temp;
+            setArray([...newArr]);
+            drawArray(newArr);
+            await new Promise(resolve => setTimeout(resolve, 25));
+        }
+    }
+
+    highlightSorted(newArr, drawArray);
+};
+
+
+
+
+/*****************************************************************************/
+/************************   Counting Sort   **********************************/
+/*****************************************************************************/
+export const countingSort = async (array, setArray, drawArray) => {
+    let newArr = [...array];
+    let max = Math.max(...newArr);
+    let min = Math.min(...newArr);
+    let range = max - min + 1;
+    let count = Array.from({ length: range }, () => 0);
+    let output = Array.from({ length: newArr.length }, () => 0);
+
+    // Store the count of each element
+    for (let i = 0; i < newArr.length; i++) {
+        count[newArr[i] - min]++;
+    }
+
+    // Store the cumulative count of each array
+    for (let i = 1; i < count.length; i++) {
+        count[i] += count[i - 1];
+    }
+
+    // Find the index of each element of the original array in count array, and
+    // place the elements in output array
+    for (let i = newArr.length - 1; i >= 0; i--) {
+        output[count[newArr[i] - min] - 1] = newArr[i];
+        count[newArr[i] - min]--;
+        setArray([...output]);
+        drawArray(output);
+        await new Promise(resolve => setTimeout(resolve, 25));
+    }
+    
+    highlightSorted(output, drawArray);
 };
 
 

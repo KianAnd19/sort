@@ -10,6 +10,8 @@ import MergeSortPage from './pages/MergeSort';
 import HeapSortPage from './pages/HeapSort';
 import RadixSortPage from './pages/RadixSort';
 import BucketSortPage from './pages/BucketSort';
+import ShellSortPage from './pages/ShellSort';
+import CountingSortPage from './pages/CountingSort';
 
 // Import other sorting pages...
 
@@ -26,6 +28,8 @@ function App() {
         <Route path="/heap-sort" element={<HeapSortPage />} />
         <Route path="/radix-sort" element={<RadixSortPage />} />
         <Route path="/bucket-sort" element={<BucketSortPage />} />
+        <Route path="/shell-sort" element={<ShellSortPage />} />
+        <Route path="/counting-sort" element={<CountingSortPage />} />
         {/* Define routes for other sorting pages... */}
       </Routes>
     </Router>

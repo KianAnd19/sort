@@ -39,8 +39,13 @@ const HomeScreen = () => {
         </Link>
         <Link to="/bucket-sort" className="min-w-[200px] min-h-[200px] p-6 max-w-sm mx-auto rounded-xl shadow-md flex justify-center items-center space-x-4 hover:bg-gray-100" style={{ backgroundImage: 'url(/sort/s8.png)', backgroundSize: 'cover' }}>
           <div className="text-xl font-medium text-black bg-slate-50 rounded-sm px-1 shadow-xl">Bucket Sort</div>
+        </Link>
+        <Link to="/shell-sort" className="min-w-[200px] min-h-[200px] p-6 max-w-sm mx-auto rounded-xl shadow-md flex justify-center items-center space-x-4 hover:bg-gray-100" style={{ backgroundImage: 'url(/sort/s9.png)', backgroundSize: 'cover' }}>
+          <div className="text-xl font-medium text-black bg-slate-50 rounded-sm px-1 shadow-xl">Shell Sort</div>
         </Link> 
-
+        <Link to="/counting-sort" className="min-w-[200px] min-h-[200px] p-6 max-w-sm mx-auto rounded-xl shadow-md flex justify-center items-center space-x-4 hover:bg-gray-100" style={{ backgroundImage: 'url(/sort/s10.png)', backgroundSize: 'cover' }}>
+          <div className="text-xl font-medium text-black bg-slate-50 rounded-sm px-1 shadow-xl">Couting  Sort</div>
+        </Link> 
         {/* Add more sorting algorithm cards here */}
       </div>
     </div>
