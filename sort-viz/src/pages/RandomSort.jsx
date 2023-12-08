@@ -12,8 +12,8 @@ const RandomSortPage = () => {
       <SortingVisualizer sortAlgorithm={randomSort} />
       <Complexity 
         best="O(1)" 
-        average="O(n^2)" 
-        worst="O(n^2)" 
+        average="O(nn!)" 
+        worst="O(infitity)" 
         space="O(1)" 
       />
     </div>
