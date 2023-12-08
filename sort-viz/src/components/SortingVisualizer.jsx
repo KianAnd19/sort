@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 
+
 const SortingVisualizer = ({ sortAlgorithm }) => {
     const [array, setArray] = useState([]);
     const arrayRef = useRef(array);
     const canvasRef = useRef(null);
+    const [numberOfElements, setNumberOfElements] = useState(50); // Default number of elements
 
     useEffect(() => {
         arrayRef.current = array;
@@ -22,9 +24,8 @@ const SortingVisualizer = ({ sortAlgorithm }) => {
     };
 
     const initializeArray = () => {
-        const totalBars = 50;
         const maxHeight = 300;
-        const newArray = Array.from({ length: totalBars }, (_, i) => Math.floor((i / totalBars) * maxHeight));
+        const newArray = Array.from({ length: numberOfElements }, (_, i) => Math.floor((i / numberOfElements) * maxHeight));
 
         for (let i = newArray.length - 1; i > 0; i--) {
             const randomIndex = Math.floor(Math.random() * (i + 1));
@@ -56,6 +57,18 @@ const SortingVisualizer = ({ sortAlgorithm }) => {
             <canvas ref={canvasRef} width={window.innerWidth} height={300}></canvas>
             <button className="bg-green-500 rounded-md px-1 m-3" onClick={startSorting}>Start Sorting</button>
             <button className="bg-red-500 rounded-md px-1 m-3" onClick={initializeArray}>Reset</button>
+            <div>
+                <input 
+                    type="range" 
+                    min="5" 
+                    max="100" 
+                    value={numberOfElements} 
+                    onChange={(e) => {
+                        setNumberOfElements(Number(e.target.value))
+                        initializeArray();
+                    }}
+                />
+            </div>
         </div>
     );
 };
