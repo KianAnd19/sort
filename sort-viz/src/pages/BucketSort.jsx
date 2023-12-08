@@ -3,11 +3,13 @@ import React from 'react';
 import SortingVisualizer from '../components/SortingVisualizer';
 import Complexity from '../components/Complexity';
 import { bucketSort } from '../hooks/useSort';
+import Header from '../components/Header';
 
 const BucketSort = () => {
   return (
     <div class="bg-slate-200">
-      <h1 class="text-xl text-center font-bold">Bucket Sort Visualizer</h1>
+      {/* <h1 class="text-xl text-center font-bold">Bucket Sort Visualizer</h1> */}
+      <Header title="Bucket Sort Visualizer" />
       <SortingVisualizer sortAlgorithm={bucketSort} />
       <Complexity 
         best="O(n+k)" 

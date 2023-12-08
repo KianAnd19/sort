@@ -2,11 +2,13 @@ import React from 'react';
 import SortingVisualizer from '../components/SortingVisualizer';
 import Complexity from '../components/Complexity';
 import { selectionSort } from '../hooks/useSort';
+import Header from '../components/Header';
 
 const SelectionSort = () => {
   return (
     <div class="bg-slate-200">
-      <h1 class="text-xl text-center font-bold">Selection Sort Visualizer</h1>
+      {/* <h1 class="text-xl text-center font-bold">Selection Sort Visualizer</h1> */}
+      <Header title="Selection Sort Visualizer" />
       <SortingVisualizer sortAlgorithm={selectionSort} />
 
       <Complexity 
