@@ -459,7 +459,7 @@ const highlightSorted = async (array, drawArray) => {
     for (let i = 0; i < array.length; i++) {
         drawArray(array, i + 1);
         playSound(array[i], maxVal); // Play sound based on the element's value
-        await new Promise(resolve => setTimeout(resolve, 50)); // Adjust time as needed
+        await new Promise(resolve => setTimeout(resolve, 25));
     }
 };
 

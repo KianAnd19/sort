@@ -52,23 +52,35 @@ const SortingVisualizer = ({ sortAlgorithm }) => {
         sortAlgorithm(array, setArray, drawArray);
     };
 
+    const pauseSorting = () => {
+
+    }
+
     return (
         <div>
             <canvas ref={canvasRef} width={window.innerWidth} height={300}></canvas>
-            <button className="bg-green-500 rounded-md px-1 m-3" onClick={startSorting}>Start Sorting</button>
-            <button className="bg-red-500 rounded-md px-1 m-3" onClick={initializeArray}>Reset</button>
-            <div>
-                <input 
-                    type="range" 
-                    min="5" 
-                    max="100" 
-                    value={numberOfElements} 
-                    onChange={(e) => {
-                        setNumberOfElements(Number(e.target.value))
-                        initializeArray();
-                    }}
-                />
-            </div>
+            <button className="m-3 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={startSorting}>
+                Start Sorting
+            </button>
+            <button className="m-3 bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={pauseSorting}>
+                Pause Sorting
+            </button>
+            <button className="m-3 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={initializeArray}>
+                Reset
+            </button>
+            <label className="m-3">Number of Elements: </label>
+            <input 
+                type="range" 
+                min="5" 
+                max="200" 
+                value={numberOfElements} 
+                className='m-3'
+                onChange={(e) => {
+                    setNumberOfElements(Number(e.target.value))
+                    initializeArray();
+                }}
+            />
+
         </div>
     );
 };
