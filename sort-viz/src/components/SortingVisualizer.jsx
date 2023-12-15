@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
+import { AudioContext } from '../AudioContext';
 
 
 const SortingVisualizer = ({ sortAlgorithm }) => {
@@ -6,6 +7,8 @@ const SortingVisualizer = ({ sortAlgorithm }) => {
     const arrayRef = useRef(array);
     const canvasRef = useRef(null);
     const [numberOfElements, setNumberOfElements] = useState(50); // Default number of elements
+    const { isMuted, setIsMuted, playSound } = useContext(AudioContext);
+
 
     useEffect(() => {
         arrayRef.current = array;
@@ -49,11 +52,15 @@ const SortingVisualizer = ({ sortAlgorithm }) => {
     };
 
     const startSorting = () => {
-        sortAlgorithm(array, setArray, drawArray);
+        sortAlgorithm(array, setArray, drawArray, playSound);
     };
 
     const pauseSorting = () => {
 
+    }
+
+    const getMuted = () => {
+        return isMuted;
     }
 
     return (
@@ -80,6 +87,16 @@ const SortingVisualizer = ({ sortAlgorithm }) => {
                     initializeArray();
                 }}
             />
+
+            <div className="flex items-center mt-4">
+                <input 
+                    type="checkbox" 
+                    checked={isMuted} 
+                    onChange={() => setIsMuted(!isMuted)} 
+                    className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                />
+                <label className="ml-2 text-sm font-medium text-gray-900">Mute Audio</label>
+            </div>
 
         </div>
     );
