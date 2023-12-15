@@ -64,42 +64,46 @@ const SortingVisualizer = ({ sortAlgorithm }) => {
     }
 
     return (
-        <div>
-            <canvas ref={canvasRef} width={window.innerWidth} height={300}></canvas>
-            <button className="m-3 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={startSorting}>
-                Start Sorting
-            </button>
-            <button className="m-3 bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={pauseSorting}>
-                Pause Sorting
-            </button>
-            <button className="m-3 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={initializeArray}>
-                Reset
-            </button>
-            <label className="m-3">Number of Elements: </label>
-            <input 
-                type="range" 
-                min="5" 
-                max="200" 
-                value={numberOfElements} 
-                className='m-3'
-                onChange={(e) => {
-                    setNumberOfElements(Number(e.target.value))
-                    initializeArray();
-                }}
-            />
-
-            <div className="flex items-center mt-4">
-                <input 
-                    type="checkbox" 
-                    checked={isMuted} 
-                    onChange={() => setIsMuted(!isMuted)} 
-                    className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                />
-                <label className="ml-2 text-sm font-medium text-gray-900">Mute Audio</label>
+        <div className="flex flex-wrap justify-left items-center p-4">
+            {/* -32 to offset the padding of the canvas */}
+            <canvas ref={canvasRef} width={window.innerWidth-32} height={300}></canvas>
+    
+            <div className="flex flex-wrap justify-left items-left space-x-5 mt-4">
+                <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={startSorting}>
+                    Start Sorting
+                </button>
+                <button className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={pauseSorting}>
+                    Pause Sorting
+                </button>
+                <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={initializeArray}>
+                    Reset
+                </button>
+                <div className="flex items-center m-3">
+                    <input 
+                        type="range" 
+                        min="5" 
+                        max="200" 
+                        value={numberOfElements} 
+                        onChange={(e) => {
+                            setNumberOfElements(Number(e.target.value))
+                            initializeArray();
+                        }}
+                        className="mx-2"
+                    />
+                    <label className="text-sm font-medium text-gray-900">Elements</label>
+                </div>
+                <div className="flex items-center ml-2 m-3 ">
+                    <input 
+                        type="checkbox" 
+                        checked={isMuted} 
+                        onChange={() => setIsMuted(!isMuted)} 
+                        className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                    />
+                    <label className="ml-2 text-sm font-medium text-gray-900">Mute</label>
+                </div>
             </div>
-
         </div>
-    );
+    );     
 };
 
 export default SortingVisualizer;
