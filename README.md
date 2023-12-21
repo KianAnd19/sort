@@ -37,7 +37,6 @@ The project includes visualizations for the following sorting algorithms:
 - Bucket Sort
 - Shell Sort
 - Counting Sort
-- [Any other algorithms included]
 
 ## Getting Started
 
@@ -48,3 +47,4 @@ To get a local copy up and running, follow these simple steps.
 - npm
   ```sh
   npm install npm@latest -g
+  npm run dev
